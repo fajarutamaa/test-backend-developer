@@ -36,10 +36,10 @@ model Product {
   nama_produk String
   kategori    Kategori? @relation(fields: [kategoriId], references: [id])
   kota        Kota?     @relation(fields: [kotaId], references: [id])
-  role        User      @relation(fields: [userId], references: [id])
+  nama        User      @relation(fields: [user], references: [username])
   kategoriId  Int?
   kotaId      Int?
-  userId      Int
+  user      String
 }
 
 model Kategori {

@@ -21,7 +21,7 @@ CREATE TABLE "Product" (
     "nama_produk" TEXT NOT NULL,
     "kategoriId" INTEGER,
     "kotaId" INTEGER,
-    "userId" INTEGER NOT NULL,
+    "user" TEXT NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
@@ -55,4 +55,4 @@ ALTER TABLE "Product" ADD CONSTRAINT "Product_kategoriId_fkey" FOREIGN KEY ("kat
 ALTER TABLE "Product" ADD CONSTRAINT "Product_kotaId_fkey" FOREIGN KEY ("kotaId") REFERENCES "Kota"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Product" ADD CONSTRAINT "Product_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Product" ADD CONSTRAINT "Product_user_fkey" FOREIGN KEY ("user") REFERENCES "User"("username") ON DELETE RESTRICT ON UPDATE CASCADE;
