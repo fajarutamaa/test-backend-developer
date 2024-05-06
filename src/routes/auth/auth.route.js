@@ -1,13 +1,8 @@
 const router = require('express').Router()
-const { checkRegister } = require('../../middleware/middleware')
-const {
-  Register,
-  Login,
-  Logout,
-} = require('../../controllers/auth/auth.controller')
+const { Login, Logout } = require('../../controllers/auth/auth.controller')
+const { Authenticate } = require('../../middleware/restrict')
 
-router.post('/register', checkRegister, Register)
 router.post('/login', Login)
-router.post('/logout', Logout)
+router.post('/logout', Authenticate, Logout)
 
 module.exports = router
