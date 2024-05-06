@@ -1,4 +1,8 @@
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/fajarutamaa/test-backend-developer/blob/main/LICENSE)
+<p align="center">
+  <a href="https://github.com/fajarutamaa/test-backend-developer/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000" alt="License">
+  </a>
+</p>
 
 <p align="center">
   <a href="#installation-guide"><strong>Installation Guide</strong></a> ·
@@ -58,6 +62,32 @@ bun format
 Create an `.env` file in your project root folder and add your variables. See [`.env.example`](https://github.com/fajarutamaa/test-backend-developer/blob/main/.env.example) file for assitance.
 
 ## Api Endpoints
+
+this project running on Base URL : `http://localhost:3000/api/v1/`
+
+| Methods | URLs                    | Actions                                       |
+| ------- | ----------------------- | --------------------------------------------- |
+| POST    | /register               | Register account                              |
+| POST    | /login                  | Login account                                 |
+| POST    | /auth/logout            | Login account                                 |
+| POST    | /forgot-password        | Send password reset link                      |
+| POST    | /reset-password/:token  | Reset user password                           |
+| GET     | /admin/users            | List users                                    |
+| PATCH   | /admin/users/edit/:id   | Change role user by admin                     |
+| DELETE  | /admin/users/:id        | Delete user by admin                          |
+| GET     | /admin/category         | List category                                 |
+| POST    | /admin/create           | Add new category by admin                     |
+| PATCH   | /admin/category/edit:id | Edit nama kategori by admin                   |
+| GET     | /admin/city             | List city                                     |
+| POST    | /admin/city/create      | Add new city by admin                         |
+| POST    | /admin/city/edit/:id    | Edit nama kota by admin                       |
+| GET     | /vehicles/data          | Fetch vehicle data using API public           |
+| GET     | /product                | List product                                  |
+| POST    | /product/create         | Add new produk                                |
+| PATCH   | /product/edit/:id       | Edit nama produk, nama kategori,and nama kota |
+| DELETE  | /product/:id            | Delete product                                |
+| GET     | /activation/:id         | Activation account                            |
+
 
 ## Error Handling
 
