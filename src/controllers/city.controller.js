@@ -12,6 +12,21 @@ async function CreateCity(req, res) {
   }
 
   try {
+    async function checkExistence(field, value, message) {
+      const city = await prisma.kota.findFirst({
+        where: { [field]: value },
+      })
+
+      if (city) {
+        res.status(400).json({
+          message: message,
+          status: 400,
+        })
+      }
+    }
+
+    await checkExistence('nama_kota', nama_kota, 'nama kota already exists')
+
     const createCity = await prisma.kota.create({
       data: {
         ...payload,
@@ -89,8 +104,31 @@ async function DeleteCity(req, res) {
     throw new InternalServerError(error.message)
   }
 }
+
+async function EditCity(req, res) {
+  const { nama_kota } = req.body
+  const { id } = req.params
+
+  try {
+    const kota = await prisma.kota.update({
+      where: { id },
+      data: { nama_kota },
+      select: {
+        id: true,
+        nama_kota: true,
+      },
+    })
+
+    let response = ResponseTemplate(kota, 'success', null, 200)
+    return res.status(200).json(response)
+  } catch (error) {
+    throw new InternalServerError(error.message)
+  }
+}
+
 module.exports = {
   CreateCity,
   ListCity,
   DeleteCity,
+  EditCity,
 }

@@ -9,8 +9,9 @@ async function CreateProduct(req, res) {
 
   const payload = {
     nama_produk,
-    kategoriid,
-    kotaid,
+    kategoriId: Number(kategoriid),
+    kotaId: Number(kotaid),
+    user: req.user.username,
   }
 
   try {
@@ -19,15 +20,16 @@ async function CreateProduct(req, res) {
         ...payload,
       },
       select: {
+        id: true,
         nama_produk: true,
         kategori: {
           select: {
-            nama_kategori,
+            nama_kategori: true,
           },
         },
         kota: {
           select: {
-            nama_kota,
+            nama_kota: true,
           },
         },
       },
@@ -62,8 +64,14 @@ async function ListProduct(req, res) {
       select: {
         id: true,
         nama_produk: true,
-        nama_kategori: true,
-        nama_kota: true,
+        kategori: {
+          select: { nama_kategori: true },
+        },
+        kota: {
+          select: {
+            nama_kota: true,
+          },
+        },
       },
     })
     let response = ResponseTemplate(listProducts, 'success', null, 200)
@@ -73,7 +81,79 @@ async function ListProduct(req, res) {
   }
 }
 
+async function EditProduct(req, res) {
+  const { nama_produk, kategoriid, kotaid } = req.body
+  const { id } = req.params
+
+  const payload = {
+    nama_produk,
+    kategoriId: Number(kategoriid),
+    kotaId: Number(kotaid),
+    user: req.user.username,
+  }
+
+  try {
+    const produk = await prisma.product.update({
+      where: { id },
+      data: {
+        ...payload,
+      },
+      select: {
+        id: true,
+        nama_produk: true,
+        kategori: {
+          select: {
+            nama_kategori: true,
+          },
+        },
+        kota: {
+          select: {
+            nama_kota: true,
+          },
+        },
+      },
+    })
+
+    let response = ResponseTemplate(produk, 'success', null, 200)
+    return res.status(200).json(response)
+  } catch (error) {
+    throw new InternalServerError(error.message)
+  }
+}
+
+async function DeleteProduct(req, res) {
+  const { id } = req.params
+
+  try {
+    const findProduct = await prisma.product.findUnique({
+      where: { id: Number(id) },
+    })
+
+    if (!findProduct) {
+      return res.status(404).json({
+        message: `not found`,
+        status: 404,
+      })
+    }
+
+    await prisma.product.delete({
+      where: {
+        id: Number(id),
+      },
+    })
+
+    return res.status(200).json({
+      message: 'success',
+      status: 200,
+    })
+  } catch (error) {
+    throw new InternalServerError(error.message)
+  }
+}
+
 module.exports = {
   CreateProduct,
   ListProduct,
+  EditProduct,
+  DeleteProduct,
 }

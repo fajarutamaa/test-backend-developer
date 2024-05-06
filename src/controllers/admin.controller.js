@@ -50,6 +50,29 @@ async function ListUsers(req, res) {
   }
 }
 
+async function EditUser(req, res) {
+  const { role } = req.body
+  const { id } = req.params
+
+  try {
+    const user = await prisma.user.update({
+      where: { id },
+      data: { role },
+      select: {
+        id: true,
+        username: true,
+        role: true,
+        updatedAt: true,
+      },
+    })
+
+    let response = ResponseTemplate(user, 'success', null, 200)
+    return res.status(200).json(response)
+  } catch (error) {
+    throw new InternalServerError(error.message)
+  }
+}
+
 async function DeleteUser(req, res) {
   const { id } = req.params
 
@@ -83,4 +106,5 @@ async function DeleteUser(req, res) {
 module.exports = {
   ListUsers,
   DeleteUser,
+  EditUser,
 }

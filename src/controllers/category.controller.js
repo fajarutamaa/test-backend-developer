@@ -12,6 +12,25 @@ async function CreateCategory(req, res) {
   }
 
   try {
+    async function checkExistence(field, value, message) {
+      const category = await prisma.kategori.findFirst({
+        where: { [field]: value },
+      })
+
+      if (category) {
+        res.status(400).json({
+          message: message,
+          status: 400,
+        })
+      }
+    }
+
+    await checkExistence(
+      'nama_kategori',
+      nama_kategori,
+      'category already exists',
+    )
+
     const createCategory = await prisma.kategori.create({
       data: {
         ...payload,
@@ -90,8 +109,30 @@ async function DeleteCategory(req, res) {
   }
 }
 
+async function EditCategory(req, res) {
+  const { nama_kategori } = req.body
+  const { id } = req.params
+
+  try {
+    const kategori = await prisma.kategori.update({
+      where: { id },
+      data: { nama_kategori },
+      select: {
+        id: true,
+        nama_kategori: true,
+      },
+    })
+
+    let response = ResponseTemplate(kategori, 'success', null, 200)
+    return res.status(200).json(response)
+  } catch (error) {
+    throw new InternalServerError(error.message)
+  }
+}
+
 module.exports = {
   CreateCategory,
   ListCategory,
   DeleteCategory,
+  EditCategory,
 }

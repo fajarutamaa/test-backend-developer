@@ -22,7 +22,7 @@ async function Register(req, res) {
   }
 
   try {
-    const checkExistence = async (field, value, message) => {
+    async function checkExistence(field, value, message) {
       const user = await prisma.user.findUnique({
         where: { [field]: value },
       })
@@ -196,8 +196,7 @@ async function Logout(req, res) {
       res.json({ msg: 'Token required' }).status(422)
     }
   } catch (error) {
-    console.log(error)
-    res.json({ msg: error }).status(422)
+    throw new InternalServerError(error.message)
   }
 }
 
