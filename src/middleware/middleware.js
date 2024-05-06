@@ -9,7 +9,7 @@ function checkRegister(req, res, next) {
       .required(),
     email: Joi.string().email().required(),
     password: Joi.string()
-      .pattern(/^[a-zA-Z0-9!@#$%^&*()]{8,30}$/)
+      .pattern(/^[a-zA-Z0-9!@#$%^&*()]{6,30}$/)
       .required(),
   })
 
@@ -30,6 +30,8 @@ function checkRegister(req, res, next) {
 function checkProduct(req, res, next) {
   const schema = Joi.object({
     nama_produk: Joi.string().max(110).required(),
+    kategoriid: Joi.number().max(100).required(),
+    kotaid: Joi.number().max(100).required(),
   })
 
   const { error } = schema.validate(req.body)
