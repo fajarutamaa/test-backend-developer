@@ -33,6 +33,12 @@ To install dependencies:
 bun install
 ```
 
+Prisma configuration and initializaze:
+
+```bash
+bun prisma generate
+```
+
 Compile and hot-reload for development:
 
 ```bash
@@ -87,7 +93,6 @@ this project running on Base URL : `http://localhost:3000/api/v1/`
 | PATCH   | /product/edit/:id       | Edit nama produk, nama kategori,and nama kota |
 | DELETE  | /product/:id            | Delete product                                |
 | GET     | /activation/:id         | Activation account                            |
-
 
 ## Error Handling
 
