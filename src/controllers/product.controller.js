@@ -35,7 +35,14 @@ async function CreateProduct(req, res) {
       },
     })
 
-    let response = ResponseTemplate(createProduct, 'success', null, 200)
+    let data = {
+      id: createProduct.id,
+      nama_produk: createProduct.nama_produk,
+      nama_kategori: createProduct.kategori.nama_kategori,
+      nama_kota: createProduct.kota.nama_kota,
+    }
+
+    let response = ResponseTemplate(data, 'success', null, 200)
     return res.status(200).json(response)
   } catch (error) {
     throw new InternalServerError(error.message)
@@ -74,7 +81,15 @@ async function ListProduct(req, res) {
         },
       },
     })
-    let response = ResponseTemplate(listProducts, 'success', null, 200)
+
+    let data = listProducts.map((product) => ({
+      id: product.id,
+      nama_produk: product.nama_produk,
+      nama_kategori: product.kategori.nama_kategori,
+      nama_kota: product.kota.nama_kota,
+    }))
+
+    let response = ResponseTemplate(data, 'success', null, 200)
     return res.status(200).json(response)
   } catch (error) {
     throw new InternalServerError(error.message)
@@ -94,7 +109,7 @@ async function EditProduct(req, res) {
 
   try {
     const produk = await prisma.product.update({
-      where: { id },
+      where: { id: Number(id) },
       data: {
         ...payload,
       },
@@ -114,7 +129,14 @@ async function EditProduct(req, res) {
       },
     })
 
-    let response = ResponseTemplate(produk, 'success', null, 200)
+    let data = {
+      id: produk.id,
+      nama_produk: produk.nama_produk,
+      nama_kategori: produk.kategori.nama_kategori,
+      nama_kota: produk.kota.nama_kota,
+    }
+
+    let response = ResponseTemplate(data, 'success', null, 200)
     return res.status(200).json(response)
   } catch (error) {
     throw new InternalServerError(error.message)

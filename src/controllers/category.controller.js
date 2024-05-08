@@ -63,6 +63,9 @@ async function ListCategory(req, res) {
         id: true,
         nama_kategori: true,
       },
+      orderBy:{
+        id: 'desc'
+      },
     })
 
     if (listCategories.length === 0) {
@@ -115,7 +118,7 @@ async function EditCategory(req, res) {
 
   try {
     const kategori = await prisma.kategori.update({
-      where: { id },
+      where: { id: Number(id) },
       data: { nama_kategori },
       select: {
         id: true,

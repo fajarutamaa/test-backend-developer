@@ -13,7 +13,7 @@ async function CreateCity(req, res) {
 
   try {
     async function checkExistence(field, value, message) {
-      const city = await prisma.kota.findFirst({
+      const city = await prisma.kota.findUnique({
         where: { [field]: value },
       })
 
@@ -111,7 +111,7 @@ async function EditCity(req, res) {
 
   try {
     const kota = await prisma.kota.update({
-      where: { id },
+      where: { id: Number(id) },
       data: { nama_kota },
       select: {
         id: true,

@@ -56,7 +56,7 @@ async function EditUser(req, res) {
 
   try {
     const user = await prisma.user.update({
-      where: { id },
+      where: { id: Number(id) },
       data: { role },
       select: {
         id: true,

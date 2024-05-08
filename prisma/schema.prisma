@@ -44,12 +44,12 @@ model Product {
 
 model Kategori {
   id            Int       @id @default(autoincrement())
-  nama_kategori String
+  nama_kategori String    @unique
   products      Product[]
 }
 
 model Kota {
   id        Int       @id @default(autoincrement())
-  nama_kota String
+  nama_kota String    @unique
   products  Product[]
 }
